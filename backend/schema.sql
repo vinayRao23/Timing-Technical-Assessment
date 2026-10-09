@@ -1,0 +1,21 @@
+-- Create Users Table
+CREATE TABLE IF NOT EXISTS users (
+  id VARCHAR(50) PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  timezone VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create Applications Table
+CREATE TABLE IF NOT EXISTS applications (
+  id VARCHAR(50) PRIMARY KEY,
+  user_id VARCHAR(50) REFERENCES users(id) ON DELETE CASCADE,
+  company VARCHAR(255) NOT NULL,
+  role VARCHAR(255) NOT NULL,
+  status VARCHAR(50) NOT NULL DEFAULT 'saved',
+  last_activity_date VARCHAR(50),
+  follow_up_after_days INTEGER DEFAULT 7,
+  deadline VARCHAR(50),
+  notes TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
