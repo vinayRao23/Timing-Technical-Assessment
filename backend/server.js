@@ -771,8 +771,8 @@ app.post('/api/applications', async (req, res) => {
   }
 });
 
-// PUT application
-app.put('/api/applications/:id', async (req, res) => {
+// PUT & PATCH application
+const handleUpdateApplication = async (req, res) => {
   const authUserId = getAuthUserId(req);
   if (!authUserId) {
     return res.status(401).json({ error: 'Unauthorized: X-User-Id header required' });
@@ -836,7 +836,10 @@ app.put('/api/applications/:id', async (req, res) => {
     console.error('Error updating application:', err);
     res.status(500).json({ error: 'Failed to update application' });
   }
-});
+};
+
+app.put('/api/applications/:id', handleUpdateApplication);
+app.patch('/api/applications/:id', handleUpdateApplication);
 
 // DELETE application
 app.delete('/api/applications/:id', async (req, res) => {

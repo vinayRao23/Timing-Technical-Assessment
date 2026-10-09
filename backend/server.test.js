@@ -199,3 +199,13 @@ test('10. Timezone & Reference Time: formatApplicationRow respects default fixed
   assert.equal(formatted.followUpDueDate, '2026-10-02');
   assert.equal(formatted.isFollowUpOverdue, true);
 });
+
+test('11. Status Update: PATCH /api/applications/:id updates application status correctly', async () => {
+  const patchRes = await request('PATCH', '/api/applications/a4', { 'X-User-Id': 'u1' }, { status: 'interviewing' });
+  assert.equal(patchRes.status, 200);
+  assert.equal(patchRes.body.status, 'interviewing');
+
+  const checkRes = await request('GET', '/api/applications/a4', { 'X-User-Id': 'u1' });
+  assert.equal(checkRes.status, 200);
+  assert.equal(checkRes.body.status, 'interviewing');
+});
